@@ -32,3 +32,7 @@ brew uninstall --cask YEEs-APPs/agent-dress/agent-dress
 ```
 
 The runtime remover preserves data and skills. No automatic data deletion or quarantine bypass is configured.
+
+## Automatic release updates
+
+The Sync published desktop releases workflow checks public OCI release metadata hourly (GitHub may delay scheduled runs). It can also be run manually from Actions. New versions are committed only after immutable release metadata, package size and SHA-256 verification. Failed validation or downgrades leave existing Casks unchanged. An unpublished edition is skipped until its first public package is available. No GitLab-to-GitHub token is required.
