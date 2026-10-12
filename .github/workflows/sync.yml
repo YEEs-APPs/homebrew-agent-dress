@@ -1,0 +1,29 @@
+name: Sync published desktop releases
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
+permissions:
+  contents: read
+concurrency:
+  group: homebrew-release-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate published releases and update Casks
+        run: node maintenance/sync.mjs
+      - name: Commit verified release updates
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- Casks)" ]; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Casks
+          git commit -m 'Update Casks from verified published releases'
+          git push origin HEAD:main
