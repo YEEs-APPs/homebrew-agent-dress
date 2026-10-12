@@ -24,12 +24,15 @@ export async function sync({ directory = "Casks", fetcher = fetch } = {}) {
   const updates = [];
   for (const product of ["agent-dress", "salus-cabinet"]) {
     const config = getProductConfig(product);
-    const release = await json(`${OCI_DESKTOP_PUBLIC_BASE_URL}/${config.prefix}/latest/latest.json`, fetcher);
-    if (!release) { console.log(`${product}: no public release yet`); continue; }
-    const content = renderCask(product, release);
     const target = path.join(directory, `${product}.rb`);
     let current = "";
     try { current = await readFile(target, "utf8"); } catch (error) { if (error.code !== "ENOENT") throw error; }
+    const release = await json(`${OCI_DESKTOP_PUBLIC_BASE_URL}/${config.prefix}/latest/latest.json`, fetcher);
+    if (!release) {
+      if (current) throw new Error(`Published release metadata missing: ${product}`);
+      console.log(`${product}: no public release yet`); continue;
+    }
+    const content = renderCask(product, release);
     const currentVersion = /^\s*version "(\d+\.\d+\.\d+)"/m.exec(current)?.[1];
     if (current && !currentVersion) throw new Error(`Invalid existing Cask: ${product}`);
     if (currentVersion) {
