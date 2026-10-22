@@ -1,9 +1,9 @@
 # Generated from published desktop-release metadata; do not edit by hand.
 cask "agent-dress" do
-  version "0.292.0"
-  sha256 "e10c9bf5b69fdbe4dec38877daec3a4ac2694ff012b86afa140f8ae704f52d85"
+  version "0.304.0"
+  sha256 "dab9cc94d1b17854228d220b188102280c543ac16c81e1a62c626403514c8637"
 
-  url "https://objectstorage.ap-seoul-1.oraclecloud.com/n/cn8fx3trhyfq/b/agent-dress-releases/o/macos/0.292.0/agent-dress-desktop-0.292.0-darwin-arm64.pkg"
+  url "https://objectstorage.ap-seoul-1.oraclecloud.com/n/cn8fx3trhyfq/b/agent-dress-releases/o/macos/0.304.0/agent-dress-desktop-0.304.0-darwin-arm64.pkg"
   name "Agent Dress"
   desc "AI agent persona and local runtime"
   homepage "https://dress.yees.kr"
@@ -11,7 +11,7 @@ cask "agent-dress" do
   depends_on arch: :arm64
   conflicts_with cask: "salus-cabinet"
 
-  pkg "agent-dress-desktop-0.292.0-darwin-arm64.pkg"
+  pkg "agent-dress-desktop-0.304.0-darwin-arm64.pkg"
 
   # Homebrew also runs uninstall during upgrades. Runtime cleanup is deliberately
   # explicit so upgrades preserve settings, data, MCP registrations and hooks.
